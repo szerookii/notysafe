@@ -1,16 +1,36 @@
-# notysafe
+# NotySafe
+A secure note application developed with Flutter. NotySafe lets you create, edit and manage your notes with advanced security features.Z
+## 🔐 Main features
+- **Note creation and management**: easily create and organize your notes
+- **Note encryption**: Protect your sensitive information with AES 256-bit encryption.
+- **Biometric authentication**: Unlock your notes with your fingerprint or facial recognition
+- **Adaptive interface**: Light and dark modes for optimum user experience
+- **Quick search**: Find your notes easily with the built-in search function
+## 📱 Supported platforms
+- Android
+- iOS
+## 📦 Installation
+1. Clone this repository:
+``bash
+git clone https://github.com/szerookii/notysafe.git
+```
+2. Navigate to the project directory:
+``bash
+cd notysafe
+```
+3. Install dependencies:
+```bash
+flutter pub get
+```
+4. Run the application:
+```bash
+flutter run
+```
+## 🖥️ Screenshots
+[Place screenshots of your application here]
 
-A new Flutter project.
+## 📄 License
+This project is licensed. See the [LICENSE](LICENSE) file for details.
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 🤝 Contribution
+Contributions are welcome! Feel free to submit a pull request or open an issue.
