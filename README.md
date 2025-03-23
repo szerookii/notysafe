@@ -23,11 +23,11 @@ Download the latest APK from the [Releases](https://github.com/szerookii/notysaf
 
 ## 🛠️ Development
 1. Clone this repository:
-``bash
+```bash
 git clone https://github.com/szerookii/notysafe.git
 ```
 2. Navigate to the project directory:
-``bash
+```bash
 cd notysafe
 ```
 3. Install dependencies:
