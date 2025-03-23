@@ -1,8 +1,7 @@
 name: notysafe
-description: "A new Flutter project."
+description: "A note app with encryption and biometric authentication."
 publish_to: 'none'
-
-version: 1.0.0+1
+version: 1.0.1
 
 environment:
   sdk: ^3.7.2
