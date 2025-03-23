@@ -61,7 +61,7 @@ class _NotesPageState extends State<NotesPage> {
         _isLoading = false;
       });
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Erreur lors du chargement des notes: $e')),
+        SnackBar(content: Text('Failed to load notes.')),
       );
     }
   }
@@ -131,7 +131,7 @@ class _NotesPageState extends State<NotesPage> {
                       : _filteredNotes.isEmpty
                       ? Center(
                         child: Text(
-                          'Aucune note trouvée',
+                          'No notes found.',
                           style: TextStyle(color: Colors.grey[600]),
                         ),
                       )

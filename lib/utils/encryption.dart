@@ -8,8 +8,8 @@ class EncryptionHelper {
   static final _secureStorage = const FlutterSecureStorage();
 
   static Future<Uint8List> _generateRandomKey() async {
-    final randomKey = List<int>.generate(keyLength, (i) => (i * 31) % 256);
-    return Uint8List.fromList(randomKey);
+    final key = Key.fromSecureRandom(keyLength);
+    return key.bytes;
   }
 
   static Future<String> encrypt(String text, String storageKey) async {
