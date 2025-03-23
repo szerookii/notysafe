@@ -6,6 +6,7 @@ import 'package:notysafe/db/database.dart';
 import 'package:notysafe/db/types.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:notysafe/utils/encryption.dart';
+import 'package:notysafe/utils/biometrics.dart';
 
 class ViewNotePage extends StatefulWidget {
   final Note note;
@@ -54,55 +55,26 @@ class _ViewNotePageState extends State<ViewNotePage> {
       _isLoading = true;
     });
 
-    bool canAuthenticate =
-        await _localAuth.canCheckBiometrics &&
-        await _localAuth.isDeviceSupported();
+    bool didAuthenticate = await BiometricsUtil.authenticate(
+      context, 
+      'Authenticate to view encrypted note'
+    );
 
-    if (!canAuthenticate) {
+    if (!didAuthenticate) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text(
-              'Biometric authentication not supported on this device',
-            ),
-          ),
-        );
         Navigator.of(context).pop();
       }
       return;
     }
 
-    try {
-      bool didAuthenticate = await _localAuth.authenticate(
-        localizedReason: 'Authenticate to view encrypted note',
-        options: const AuthenticationOptions(
-          biometricOnly: true,
-          stickyAuth: true,
-          sensitiveTransaction: true,
-        ),
-      );
+    if (mounted) {
+      _loadContent();
+    }
 
-      if (!didAuthenticate) {
-        if (mounted) {
-          Navigator.of(context).pop();
-        }
-        return;
-      }
-
-      if (mounted) {
-        _loadContent();
-      }
-    } catch (e) {
-      debugPrint('Error authenticating: $e');
-      if (mounted) {
-        Navigator.of(context).pop();
-      }
-    } finally {
-      if (mounted) {
-        setState(() {
-          _isLoading = false;
-        });
-      }
+    if (mounted) {
+      setState(() {
+        _isLoading = false;
+      });
     }
   }
 
@@ -147,42 +119,13 @@ class _ViewNotePageState extends State<ViewNotePage> {
   }
 
   Future<void> _toggleEncryption() async {
-    bool canAuthenticate =
-        await _localAuth.canCheckBiometrics &&
-        await _localAuth.isDeviceSupported();
+    bool canAuthenticate = await BiometricsUtil.authenticate(
+      context,
+      'Authenticate to encrypt this note'
+    );
 
-    if (!canAuthenticate) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text(
-              'Biometric authentication not supported on this device',
-            ),
-          ),
-        );
-      }
+    if (!canAuthenticate && !_isNoteEncrypted) {
       return;
-    }
-
-    if (!_isNoteEncrypted) {
-      var didAuthenticate = false;
-      try {
-        didAuthenticate = await _localAuth.authenticate(
-          localizedReason: 'Authenticate to encrypt this note',
-          options: const AuthenticationOptions(
-            biometricOnly: true,
-            stickyAuth: true,
-            sensitiveTransaction: true,
-          ),
-        );
-      } catch (e) {
-        debugPrint('Error authenticating: $e');
-      }
-
-      if (!didAuthenticate) {
-        // TODO: check if failed
-        return;
-      }
     }
 
     if (mounted) {
@@ -340,7 +283,7 @@ class _ViewNotePageState extends State<ViewNotePage> {
                           decoration: BoxDecoration(
                             color: Theme.of(
                               context,
-                            ).colorScheme.surfaceVariant.withOpacity(0.1),
+                            ).colorScheme.surfaceContainerHighest.withOpacity(0.1),
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Column(
