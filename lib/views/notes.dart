@@ -7,6 +7,7 @@ import 'package:notysafe/db/database.dart';
 import 'package:notysafe/db/types.dart';
 import 'package:notysafe/views/view_note.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class NotesPage extends StatefulWidget {
   final Function toggleTheme;
@@ -61,7 +62,7 @@ class _NotesPageState extends State<NotesPage> {
         _isLoading = false;
       });
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to load notes.')),
+        SnackBar(content: Text(context.tr('error.cannot_load_notes'))),
       );
     }
   }
@@ -91,7 +92,7 @@ class _NotesPageState extends State<NotesPage> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.surface,
         scrolledUnderElevation: 0,
-        title: const Text('My notes.'),
+        title: Text(context.tr('notes_view.appbar_title')),
         titleTextStyle: TextStyle(
           color: Theme.of(context).colorScheme.onSurface,
           fontSize: 20,
@@ -108,7 +109,7 @@ class _NotesPageState extends State<NotesPage> {
             onPressed: () {
               widget.toggleTheme();
             },
-            tooltip: 'Toggle theme',
+            tooltip: context.tr('tooltip.toggle_theme'),
           ),
           _buildPopupMenu(context),
         ],
@@ -130,10 +131,7 @@ class _NotesPageState extends State<NotesPage> {
                       ? const Center(child: CircularProgressIndicator())
                       : _filteredNotes.isEmpty
                       ? Center(
-                        child: Text(
-                          'No notes found.',
-                          style: TextStyle(color: Colors.grey[600]),
-                        ),
+                        child: Text(context.tr('notes_view.no_notes')),
                       )
                       : MasonryGridView.count(
                         crossAxisCount: 2,
@@ -203,23 +201,23 @@ class _NotesPageState extends State<NotesPage> {
       },
       itemBuilder:
           (context) => [
-            const PopupMenuItem<String>(
+            PopupMenuItem<String>(
               value: 'settings',
               child: Row(
                 children: [
                   Icon(Icons.settings),
                   SizedBox(width: 8),
-                  Text('Settings'),
+                  Text(context.tr('notes_view.settings')),
                 ],
               ),
             ),
-            const PopupMenuItem<String>(
+            PopupMenuItem<String>(
               value: 'about',
               child: Row(
                 children: [
                   Icon(Icons.info_outline),
                   SizedBox(width: 8),
-                  Text('About'),
+                  Text(context.tr('notes_view.about')),
                 ],
               ),
             ),

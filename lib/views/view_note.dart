@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:notysafe/db/database.dart';
@@ -29,7 +30,6 @@ class _ViewNotePageState extends State<ViewNotePage> {
   late TextEditingController _titleController;
   bool _isContentChanged = false;
   bool _isSaving = false;
-  final LocalAuthentication _localAuth = LocalAuthentication();
   late bool _isNoteEncrypted;
   bool _isContentLoaded = false;
   bool _isLoading = false;
@@ -41,7 +41,11 @@ class _ViewNotePageState extends State<ViewNotePage> {
     _isNoteEncrypted = widget.note.isEncrypted;
 
     if (_isNoteEncrypted) {
-      _authenticateAndLoadContent();
+      Future.microtask(() {
+        if (mounted) {
+          _authenticateAndLoadContent();
+        }
+      });
     } else {
       _loadContent();
     }
@@ -57,7 +61,7 @@ class _ViewNotePageState extends State<ViewNotePage> {
 
     bool didAuthenticate = await BiometricsUtil.authenticate(
       context, 
-      'Authenticate to view encrypted note'
+      context.tr("auth_to_view"),
     );
 
     if (!didAuthenticate) {
@@ -121,7 +125,7 @@ class _ViewNotePageState extends State<ViewNotePage> {
   Future<void> _toggleEncryption() async {
     bool canAuthenticate = await BiometricsUtil.authenticate(
       context,
-      'Authenticate to encrypt this note'
+      context.tr("auth_to_toggle_encryption"),
     );
 
     if (!canAuthenticate && !_isNoteEncrypted) {
@@ -138,8 +142,8 @@ class _ViewNotePageState extends State<ViewNotePage> {
         SnackBar(
           content: Text(
             _isNoteEncrypted
-                ? 'Note encryption enabled'
-                : 'Note encryption disabled',
+                ? context.tr('encryption_toggled')
+                : context.tr('encryption_untoggled'),
           ),
         ),
       );
@@ -150,7 +154,7 @@ class _ViewNotePageState extends State<ViewNotePage> {
     final plainText = _contentController.document.toDelta().toJson();
     return Note(
       id: widget.note.id,
-      title: _titleController.text.isEmpty ? 'Untitled' : _titleController.text,
+      title: _titleController.text.isEmpty ? context.tr("untitled_note") : _titleController.text,
       content: jsonEncode(plainText),
       date: DateTime.now().toString(),
       isEncrypted: _isNoteEncrypted,
@@ -184,8 +188,8 @@ class _ViewNotePageState extends State<ViewNotePage> {
         });
 
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Note saved'),
+          SnackBar(
+            content: Text(context.tr('note_saved')),
             duration: Duration(seconds: 1),
           ),
         );
@@ -197,7 +201,7 @@ class _ViewNotePageState extends State<ViewNotePage> {
         });
         ScaffoldMessenger.of(
           context,
-        ).showSnackBar(SnackBar(content: Text('Error saving note: $e')));
+        ).showSnackBar(SnackBar(content: Text(context.tr('error.cannot_save_note'))));
       }
     }
   }
@@ -233,15 +237,15 @@ class _ViewNotePageState extends State<ViewNotePage> {
           title: TextField(
             controller: _titleController,
             style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-            decoration: const InputDecoration(
+            decoration: InputDecoration(
               border: InputBorder.none,
-              hintText: 'Note title',
+              hintText: context.tr("note_title")
             ),
           ),
           actions: [
             Tooltip(
               message:
-                  _isNoteEncrypted ? 'Disable encryption' : 'Enable encryption',
+                  _isNoteEncrypted ? context.tr("disable_encryption_hint") : context.tr("enable_encryption_hint"),
               child: IconButton(
                 icon: Icon(
                   _isNoteEncrypted ? Icons.lock : Icons.lock_open,
@@ -265,11 +269,11 @@ class _ViewNotePageState extends State<ViewNotePage> {
                     children: [
                       const Icon(Icons.lock, size: 48),
                       const SizedBox(height: 16),
-                      const Text('This note is encrypted'),
+                      Text(context.tr('auth_note_encrypted')),
                       const SizedBox(height: 16),
                       ElevatedButton(
                         onPressed: _authenticateAndLoadContent,
-                        child: const Text('Authenticate to view'),
+                        child: Text(context.tr('auth_to_view')),
                       ),
                     ],
                   ),

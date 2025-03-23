@@ -1,0 +1,39 @@
+{
+  "notes_view": {
+    "appbar_title": "Mes notes.",
+    "search_hint": "Rechercher des notes...",
+    "settings": "Paramètres",
+    "about": "À propos",
+    "no_notes": "Aucune note trouvée."
+  },
+  "tooltip": {
+    "toggle_theme": "Basculer le thème"
+  },
+  "error": {
+    "cannot_load_notes": "Impossible de charger les notes.",
+    "cannot_decrypt_note": "Impossible de décrypter la note.",
+    "cannot_save_note": "Impossible de sauvegarder la note."
+  },
+  "dialog": {
+    "about": {
+      "title": "À propos de NotySafe",
+      "close": "Fermer"
+    }
+  },
+  "delete": "Supprimer",
+  "auth_to_delete": "Authentifiez-vous pour supprimer cette note.",
+  "auth_to_view": "Authentifiez-vous pour voir le contenu de cette note.",
+  "auth_to_toggle_encryption": "Authentifiez-vous pour activer/désactiver le chiffrement.",
+  "encryption_toggled": "Chiffrement activé.",
+  "encryption_untoggled": "Chiffrement désactivé.",
+  "confirm_deletion_title": "Confirmer la suppression",
+  "confirm_deletion_content": "Êtes-vous sûr de vouloir supprimer cette note ?",
+  "cancel": "Annuler",
+  "note_deleted": "Note supprimée.",
+  "untitled_note": "Note sans titre",
+  "note_saved": "Note sauvegardée.",
+  "note_title": "Titre de la note",
+  "disable_encryption_hint": "Désactiver le chiffrement",
+  "enable_encryption_hint": "Activer le chiffrement",
+  "auth_note_encrypted": "Cette note est chiffrée."
+}

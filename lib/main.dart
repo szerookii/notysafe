@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_quill/flutter_quill.dart';
@@ -5,7 +6,16 @@ import 'package:notysafe/views/notes.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const MyApp());
+  await EasyLocalization.ensureInitialized();
+  
+  runApp(
+    EasyLocalization(
+      supportedLocales: [Locale('fr', 'FR'), Locale('en', 'US')],
+      path: 'assets/translations',
+      fallbackLocale: Locale('en', 'US'),
+      child: MyApp()
+    ),
+  );
 }
 
 class MyApp extends StatefulWidget {
@@ -35,11 +45,13 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
       home: NotesPage(toggleTheme: toggleTheme),
+      supportedLocales: context.supportedLocales,
+      locale: context.locale,
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         FlutterQuillLocalizations.delegate,
+        ...context.localizationDelegates,
       ],
     );
   }

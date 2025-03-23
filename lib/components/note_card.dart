@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:ui';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:notysafe/db/database.dart';
@@ -150,7 +151,7 @@ class NoteCard extends StatelessWidget {
               Icon(Icons.delete, color: Theme.of(context).colorScheme.error),
               const SizedBox(width: 8),
               Text(
-                'Delete',
+                context.tr("delete"),
                 style: TextStyle(color: Theme.of(context).colorScheme.error),
               ),
             ],
@@ -164,13 +165,13 @@ class NoteCard extends StatelessWidget {
         if (note.isEncrypted) {
           canProceed = await BiometricsUtil.authenticate(
             context,
-            'Authenticate to delete note',
+            context.tr("auth_to_delete"),
           );
 
           if (!canProceed) {
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text('Authentication required to delete note'),
+              SnackBar(
+                content: Text(context.tr("auth_to_delete")),
               ),
             );
             return;
@@ -182,19 +183,17 @@ class NoteCard extends StatelessWidget {
             context: context,
             builder:
                 (context) => AlertDialog(
-                  title: const Text('Confirm deletion'),
-                  content: const Text(
-                    'Are you sure you want to delete this note?',
-                  ),
+                  title: Text(context.tr("confirm_deletion_title")),
+                  content: Text(context.tr("confirm_deletion_content")),
                   actions: [
                     TextButton(
                       onPressed: () => Navigator.pop(context, false),
-                      child: const Text('Cancel'),
+                      child: Text(context.tr("cancel")),
                     ),
                     TextButton(
                       onPressed: () => Navigator.pop(context, true),
                       child: Text(
-                        'Delete',
+                        context.tr("delete"),
                         style: TextStyle(
                           color: Theme.of(context).colorScheme.error,
                         ),
@@ -211,7 +210,7 @@ class NoteCard extends StatelessWidget {
 
             ScaffoldMessenger.of(
               context,
-            ).showSnackBar(const SnackBar(content: Text('Note deleted')));
+            ).showSnackBar(SnackBar(content: Text(context.tr("note_deleted"))));
           }
         }
       }

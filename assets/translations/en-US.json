@@ -1,0 +1,39 @@
+{
+  "notes_view": {
+    "appbar_title": "My notes.",
+    "search_hint": "Search for notes...",
+    "settings": "Settings",
+    "about": "About",
+    "no_notes": "No notes found."
+  },
+  "tooltip": {
+    "toggle_theme": "Toggle theme"
+  },
+  "error": {
+    "cannot_load_notes": "Unable to load notes.",
+    "cannot_decrypt_note": "Unable to decrypt note.",
+    "cannot_save_note": "Unable to save note."
+  },
+  "dialog": {
+    "about": {
+      "title": "About NotySafe",
+      "close": "Close"
+    }
+  },
+  "delete": "Delete",
+  "auth_to_delete": "Authenticate yourself to delete this note.",
+  "auth_to_view": "Authenticate yourself to view the contents of this note.",
+  "auth_to_toggle_encryption": "Authenticate to enable/disable encryption.",
+  "encryption_toggled": "Encryption enabled.",
+  "encryption_untoggled": "Encryption disabled",
+  "confirm_deletion_title": "Confirm deletion",
+  "confirm_deletion_content": "Are you sure you want to delete this note?",
+  "cancel": "Cancel",
+  "note_deleted": "Note deleted.",
+  "untitled_note": "Untitled note",
+  "note_saved": "Note saved.",
+  "note_title": "Note title",
+  "disable_encryption_hint": "Disable encryption",
+  "enable_encryption_hint": "Enable encryption",
+  "auth_note_encrypted": "This note is encrypted."
+}

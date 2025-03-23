@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class CustomSearchBar extends StatelessWidget {
@@ -14,7 +15,7 @@ class CustomSearchBar extends StatelessWidget {
       padding: const EdgeInsets.only(top: 8.0, bottom: 12.0),
       child: TextField(
         decoration: InputDecoration(
-          hintText: 'Search notes...',
+          hintText: context.tr('notes_view.search_hint'),
           prefixIcon: const Icon(Icons.search),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(24),
